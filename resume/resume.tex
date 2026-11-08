@@ -66,10 +66,10 @@ Senior cross-platform software engineer with 5+ years of commercial experience i
 \begin{rSection}{Open Source Projects}
 
     \begin{rSubsection}{Logd}{2025 -- Present}{Creator \& Maintainer}{BSD 3-Clause \hfill \footnotesize\textcolor{bluegray}{\faClean{\faGithubAlt}~\href{https://github.com/pccria/logd}{pccria/logd}~\textperiodcentered~\faClean{\faCube}~\href{https://pub.dev/packages/logd}{pub.dev/packages/logd}}}
-        \item Organized loggers in a dot-separated hierarchy with lazy config inheritance, allowing runtime modifications to propagate across the tree without manual cache invalidation.
-        \item Decoupled log record formatting from output rendering (terminal, file, JSON); offloaded I/O and serialization to a background isolate via Dart FFI with backpressure to keep the UI thread unblocked.
-        \item Architected as a modular Melos workspace with dedicated extensions for SQLite WAL storage, network telemetry inspection, and custom static analysis rules, validated by 2,500+ automated tests.
-        \\ \chip{Dart} \chip{Flutter} \chip{Dart Isolates} \chip{FFI} \chip{SQLite} \chip{Melos} \chip{Concurrency}
+        \item Organized loggers in a dot-separated hierarchy with runtime policy reconfiguration, compiling effective states into 0.4\,ns bitmasks so disabled paths short-circuit with zero heap allocations.
+        \item Propagated ambient diagnostic metadata across async boundaries via Dart Zones (\texttt{LogContext.run}) and offloaded formatting and I/O to background isolates via \texttt{SendPort} (\textasciitilde 15\,\textmu s handoff) so logging never competes with the host event loop.
+        \item Architected as an 8-package Melos workspace (zero-dependency core) with opt-in satellites for SQLite WAL storage, Dio inspection, and LLM token-compressed telemetry (\texttt{logd\_toon}, 30--50\% reduction), validated by 2,500+ tests.
+        \\ \chip{Dart} \chip{Flutter} \chip{Dart Isolates} \chip{Dart Zones} \chip{SQLite} \chip{Melos} \chip{Concurrency}
     \end{rSubsection}
 
     \begin{rSubsection}{SarvMD}{2026 -- Present}{Creator \& Maintainer}{BUSL-1.1 \hfill \footnotesize\textcolor{bluegray}{\faClean{\faGithubAlt}~\href{https://github.com/pccria/sarvmd}{pccria/sarvmd}~\textperiodcentered~\faClean{\faDesktop}~\href{https://pccria.github.io/sarvmd}{Live Studio Demo}}}
