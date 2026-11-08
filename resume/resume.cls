@@ -29,6 +29,15 @@
 
 \LoadClass{article} % Load the base class
 
+% Enable Unicode glyph mapping for clean ATS / pdftotext extraction
+\input{glyphtounicode}
+\pdfglyphtounicode{uniFB00}{0066 0066}
+\pdfglyphtounicode{uniFB01}{0066 0069}
+\pdfglyphtounicode{uniFB02}{0066 006C}
+\pdfglyphtounicode{uniFB03}{0066 0066 0069}
+\pdfglyphtounicode{uniFB04}{0066 0066 006C}
+\pdfgentounicode=1
+
 %----------------------------------------------------------------------------------------
 %	REQUIRED PACKAGES AND MISC CONFIGURATIONS
 %----------------------------------------------------------------------------------------
@@ -42,9 +51,15 @@
 \usepackage{graphicx} % Required for including images
 
 
+\usepackage{lmodern}
 \usepackage[sfdefault]{roboto}
 \usepackage[T1]{fontenc}
+\usepackage{microtype}
+\DisableLigatures[f]{encoding = *}
 \usepackage{fontawesome}
+
+% Mask decorative FontAwesome icons from PDF text extractors (ATS / pdftotext)
+\newcommand{\faClean}[1]{\pdfliteral direct{/Span<</ActualText()>>BDC}{\upshape #1}\pdfliteral direct{EMC}}
 
 
 %----------------------------------------------------------------------------------------
@@ -78,7 +93,7 @@
 \definecolor{pantonegray}{RGB}{66, 67, 72}
 \definecolor{darkgray}{RGB}{52 ,52, 52}
 \definecolor{bluegray}{RGB}{74, 97, 113}
-\definecolor{backgound}{RGB}{236, 233, 225}
+\definecolor{background}{RGB}{236, 233, 225}
 
 %----------------------------------------------------------------------------------------
 %	HYPERLINKS
@@ -90,8 +105,10 @@
     linkcolor=bluegray,
     filecolor=bluegray,      
     urlcolor=bluegray,
-    pdftitle={PooriaAskarim.Resume},
-    pdfpagemode=FullScreen,
+    pdftitle={Pooria Askari Moqaddam - Senior Cross-Platform \& Systems Engineer},
+    pdfauthor={Pooria Askari Moqaddam},
+    pdfsubject={Resume / CV - Senior Cross-Platform \& Systems Engineer},
+    pdfpagemode=UseNone,
 }
 
 %----------------------------------------------------------------------------------------
@@ -152,10 +169,10 @@
   {\color{bluegray}\footnotesize%
   \renewcommand{\arraystretch}{1.2}%
   \begin{tabular*}{\textwidth}{@{} l @{\extracolsep{\fill}} r @{}}
-    \faPhone\hspace{3pt}\@phone & \@email\hspace{3pt}\faEnvelope \\
+    \faClean{\faPhone}\hspace{3pt}\@phone & \@email\hspace{3pt}\faClean{\faEnvelope} \\
   \end{tabular*}\par\vspace{-2pt}%
   \begin{tabular*}{\textwidth}{@{} l @{\extracolsep{\fill}} c @{\extracolsep{\fill}} r @{}}
-    \faLinkedin\hspace{3pt}\@linkedin & \@address & \@github\hspace{3pt}\faGithubAlt \\
+    \faClean{\faLinkedin}\hspace{3pt}\@linkedin & \@address & \@github\hspace{3pt}\faClean{\faGithubAlt} \\
   \end{tabular*}\par
   }%
   \vspace{5pt}%
@@ -196,7 +213,7 @@
 	}%
 	\vskip 1pt % Vertical whitespace
 	\begin{list}
-        {$\pdot$}
+        {\pdot}
         {\leftmargin=16pt}
 		      \setlength{\itemsep}{-0.6em} \vspace{-0.6em} % Reduce vertical spacing between items in the list for a tighter look
     }{  
