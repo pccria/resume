@@ -344,7 +344,8 @@
     let currentLang = 'en';
     let currentPdfDoc = null;
     let manualZoomScale = null; // null means auto-fit
-    let isRendering = false;
+    let currentRenderId = 0;
+    let activeRenderTask = null;
 
     const PDF_FILES = {
       en: 'PooriaAskariMoqaddam.resume.pdf',
@@ -356,25 +357,41 @@
       document.documentElement.lang = isFa ? 'fa' : 'en';
       document.documentElement.dir = isFa ? 'rtl' : 'ltr';
 
-      document.getElementById('btn-en').classList.toggle('active', !isFa);
-      document.getElementById('btn-fa').classList.toggle('active', isFa);
+      const btnEn = document.getElementById('btn-en');
+      if (btnEn) btnEn.classList.toggle('active', !isFa);
 
-      document.getElementById('title-name').textContent = isFa ? 'پوریا عسکری مقدم' : 'Pooria Askari Moqaddam';
-      document.getElementById('title-role').textContent = isFa ? 'مهندس ارشد نرم‌افزار' : 'Senior Software Engineer';
+      const btnFa = document.getElementById('btn-fa');
+      if (btnFa) btnFa.classList.toggle('active', isFa);
+
+      const titleName = document.getElementById('title-name');
+      if (titleName) titleName.textContent = isFa ? 'پوریا عسکری مقدم' : 'Pooria Askari Moqaddam';
+
+      const titleRole = document.getElementById('title-role');
+      if (titleRole) titleRole.textContent = isFa ? 'مهندس ارشد نرم‌افزار' : 'Senior Software Engineer';
 
       const downloadBtn = document.getElementById('btn-download');
-      downloadBtn.href = PDF_FILES[lang];
-      document.getElementById('download-text').textContent = isFa ? 'دانلود نسخه PDF' : 'Download PDF';
+      if (downloadBtn) downloadBtn.href = PDF_FILES[lang];
+
+      const downloadText = document.getElementById('download-text');
+      if (downloadText) downloadText.textContent = isFa ? 'دانلود نسخه PDF' : 'Download PDF';
 
       document.title = isFa ? 'پوریا عسکری مقدم — رزومه' : 'Pooria Askari Moqaddam — Resume';
-      document.getElementById('loading-text').textContent = isFa ? 'در حال رندر وکتور رزومه...' : 'Rendering pixel-perfect vector resume...';
+
+      const loadingText = document.getElementById('loading-text');
+      if (loadingText) {
+        loadingText.textContent = isFa ? 'در حال رندر وکتور رزومه...' : 'Rendering pixel-perfect vector resume...';
+      }
     }
 
     async function renderDocument() {
-      if (isRendering) return;
-      isRendering = true;
+      const renderId = ++currentRenderId;
+      if (activeRenderTask) {
+        try { activeRenderTask.cancel(); } catch (e) {}
+      }
 
       const container = document.getElementById('resume-container');
+      if (!container) return;
+
       container.innerHTML = `
         <div class="loading-spinner" id="loading-indicator">
           <div class="spinner"></div>
@@ -385,13 +402,19 @@
       try {
         const pdfUrl = PDF_FILES[currentLang];
         currentPdfDoc = await pdfjsLib.getDocument(pdfUrl).promise;
+        if (renderId !== currentRenderId) return;
+
         container.innerHTML = '';
 
         // Calculate available width for responsive auto-fit
         const containerWidth = Math.min(container.clientWidth || 880, 880);
 
         for (let pageNum = 1; pageNum <= currentPdfDoc.numPages; pageNum++) {
+          if (renderId !== currentRenderId) return;
+
           const page = await currentPdfDoc.getPage(pageNum);
+          if (renderId !== currentRenderId) return;
+
           const naturalViewport = page.getViewport({ scale: 1.0 });
 
           // Determine scale
@@ -422,11 +445,22 @@
           const ctx = canvas.getContext('2d');
           const transform = pixelRatio !== 1 ? [pixelRatio, 0, 0, pixelRatio, 0, 0] : null;
 
-          await page.render({
+          activeRenderTask = page.render({
             canvasContext: ctx,
             transform: transform,
             viewport: viewport
-          }).promise;
+          });
+
+          try {
+            await activeRenderTask.promise;
+          } catch (renderErr) {
+            if (renderErr && renderErr.name === 'RenderingCancelledException') {
+              return;
+            }
+            throw renderErr;
+          }
+
+          if (renderId !== currentRenderId) return;
           card.appendChild(canvas);
 
           // Text Layer (Real DOM text for selection, search & copy)
@@ -438,11 +472,15 @@
           card.appendChild(textLayerDiv);
 
           const textContent = await page.getTextContent();
+          if (renderId !== currentRenderId) return;
+
           await pdfjsLib.renderTextLayer({
             textContentSource: textContent,
             container: textLayerDiv,
             viewport: viewport
           }).promise;
+
+          if (renderId !== currentRenderId) return;
 
           // Annotation Layer (Clickable Links)
           const annotations = await page.getAnnotations();
@@ -483,6 +521,7 @@
 
         updateZoomLabel();
       } catch (err) {
+        if (renderId !== currentRenderId) return;
         console.error('Failed to render PDF:', err);
         container.innerHTML = `
           <div class="loading-spinner">
@@ -491,7 +530,9 @@
           </div>
         `;
       } finally {
-        isRendering = false;
+        if (renderId === currentRenderId) {
+          activeRenderTask = null;
+        }
       }
     }
 
@@ -516,6 +557,7 @@
 
     function updateZoomLabel() {
       const label = document.getElementById('zoom-label');
+      if (!label) return;
       if (!manualZoomScale) {
         label.textContent = 'Fit';
       } else {
