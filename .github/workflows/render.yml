@@ -6,6 +6,7 @@ on:
       - master
     paths:
       - 'resume/**'
+      - 'web/**'
       - '.github/workflows/render.yml'
   workflow_dispatch:
 
