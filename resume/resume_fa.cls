@@ -89,16 +89,16 @@
   \begingroup
   \leftskip=0pt\rightskip=0pt\parindent=0pt\parfillskip=0pt
   % Identity row: Name — Subtitle at start, translation link at end
-  \begin{tabular*}{\textwidth}{@{} r @{\extracolsep{\fill}} l @{}}
-    \textcolor{pantonegray}{%
-      {\Large\bfseries\name}%
-      \hspace{8pt}\textbf{\textemdash}\hspace{8pt}%
-      {\normalsize\bfseries\@subtitle}%
-    } &
-    \ifthenelse{\isundefined{\@langlinkurl}}{}{%
-      \textcolor{bluegray}{\footnotesize\href{\@langlinkurl}{\faClean{\faLanguage}\hspace{3pt}\@langlinktext}}%
-    } \\
-  \end{tabular*}\par\vspace{2pt}%
+  \noindent
+  \textcolor{pantonegray}{%
+    {\Large\bfseries\name}%
+    \hspace{8pt}\textbf{\textemdash}\hspace{8pt}%
+    {\normalsize\bfseries\@subtitle}%
+  }%
+  \hfill
+  \ifthenelse{\isundefined{\@langlinkurl}}{}{%
+    \textcolor{bluegray}{\footnotesize\href{\@langlinkurl}{\faClean{\faLanguage}\hspace{3pt}\@langlinktext}}%
+  }\par\vspace{2pt}%
   % Contact rows (3 balanced columns: right, true center, left)
   {\color{bluegray}\footnotesize%
   \par\vspace{2pt}\noindent
@@ -159,6 +159,9 @@
 %----------------------------------------------------------------------------------------
 
 \usepackage{xepersian}
+
+% Fix for TeX Live 2025/2026 tagging kernel compatibility in xepersian/bidi tabular
+\providecommand\UseMathForPositioningText{}
 
 % Primary Persian Text Font (Vazirmatn)
 \settextfont[

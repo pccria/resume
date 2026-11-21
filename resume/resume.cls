@@ -127,16 +127,16 @@
   \begingroup
   \leftskip=0pt\rightskip=0pt\parindent=0pt\parfillskip=0pt
   % Identity row: Name — Subtitle at start, translation link at end
-  \begin{tabular*}{\textwidth}{@{} l @{\extracolsep{\fill}} r @{}}
-    \textcolor{pantonegray}{%
-      {\MakeUppercase{\Large\bfseries\name}}%
-      \hspace{8pt}\textbf{\textemdash}\hspace{8pt}%
-      {\MakeUppercase{\small\bfseries\@subtitle}}%
-    } &
-    \ifthenelse{\isundefined{\@langlinkurl}}{}{%
-      \textcolor{bluegray}{\footnotesize\href{\@langlinkurl}{\faClean{\faLanguage}\hspace{3pt}\@langlinktext}}%
-    } \\
-  \end{tabular*}\par\vspace{2pt}%
+  \noindent
+  \textcolor{pantonegray}{%
+    {\MakeUppercase{\Large\bfseries\name}}%
+    \hspace{8pt}\textbf{\textemdash}\hspace{8pt}%
+    {\MakeUppercase{\small\bfseries\@subtitle}}%
+  }%
+  \hfill
+  \ifthenelse{\isundefined{\@langlinkurl}}{}{%
+    \textcolor{bluegray}{\footnotesize\href{\@langlinkurl}{\faClean{\faLanguage}\hspace{3pt}\@langlinktext}}%
+  }\par\vspace{2pt}%
   % Contact rows (3 balanced columns: left, true center, right)
   {\color{bluegray}\footnotesize%
   \par\vspace{2pt}\noindent
