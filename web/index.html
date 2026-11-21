@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pooria Askari Moqaddam — Senior Software Engineer</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📄</text></svg>">
+  
+  <!-- PDF.js Text Layer Stylesheet -->
+  <link rel="stylesheet" href="vendor/pdf_viewer.min.css">
+  
+  <style>
+    :root {
+      --pantonegray: #424348;
+      --darkgray: #343434;
+      --bluegray: #4a6171;
+      --accent: #2563eb;
+      --background: #ece9e1;
+      --surface: #ffffff;
+      --border: #d8d4cb;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Vazirmatn", Helvetica, Arial, sans-serif;
+      background-color: var(--background);
+      color: var(--darkgray);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Sticky Navigation Header */
+    header {
+      background-color: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .header-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0.65rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand h1 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--pantonegray);
+      letter-spacing: -0.01em;
+    }
+
+    .brand span {
+      font-size: 0.8rem;
+      color: var(--bluegray);
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    /* Language Switcher */
+    .lang-switcher {
+      display: inline-flex;
+      background: var(--background);
+      padding: 3px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .lang-btn {
+      border: none;
+      background: transparent;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--pantonegray);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .lang-btn.active {
+      background: var(--surface);
+      color: var(--bluegray);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    /* Zoom Controls */
+    .zoom-controls {
+      display: inline-flex;
+      align-items: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .zoom-btn {
+      border: none;
+      background: transparent;
+      padding: 6px 10px;
+      color: var(--pantonegray);
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s ease;
+    }
+
+    .zoom-btn:hover {
+      background: var(--background);
+    }
+
+    .zoom-label {
+      font-size: 0.75rem;
+      padding: 0 6px;
+      color: var(--bluegray);
+      font-weight: 600;
+      min-width: 48px;
+      text-align: center;
+      user-select: none;
+    }
+
+    /* Download Button */
+    .download-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bluegray);
+      color: #ffffff;
+      padding: 7px 14px;
+      border-radius: 7px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.15s ease;
+    }
+
+    .download-btn:hover {
+      background: #3c4f5c;
+    }
+
+    /* Main Container */
+    .main-container {
+      max-width: 1000px;
+      width: 100%;
+      margin: 1.5rem auto 3rem auto;
+      padding: 0 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    /* Document Loading State */
+    .loading-spinner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 1rem;
+      color: var(--bluegray);
+      gap: 1rem;
+    }
+
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 3.5px solid rgba(74, 97, 113, 0.2);
+      border-top-color: var(--bluegray);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Resume Page Card */
+    .page-card {
+      background: #ffffff;
+      border-radius: 4px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.05);
+      position: relative;
+      margin: 0 auto;
+      overflow: hidden;
+      line-height: 1;
+    }
+
+    .page-card canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Interactive Text Layer (Native selectable text) */
+    .textLayer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      overflow: hidden;
+      opacity: 0.25; /* subtle selection visibility */
+      line-height: 1.0;
+      transform-origin: 0 0;
+      user-select: text;
+      -webkit-user-select: text;
+    }
+
+    .textLayer ::selection {
+      background: rgba(37, 99, 235, 0.35);
+      color: transparent;
+    }
+
+    /* Interactive Clickable Links Overlay */
+    .interactive-link {
+      position: absolute;
+      z-index: 20;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .interactive-link:hover {
+      background-color: rgba(37, 99, 235, 0.12);
+      box-shadow: 0 0 0 1.5px rgba(37, 99, 235, 0.35);
+    }
+
+    footer {
+      margin-top: auto;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 1.25rem 1rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--bluegray);
+    }
+
+    footer a {
+      color: var(--bluegray);
+      text-decoration: none;
+      font-weight: 600;
+      margin: 0 0.5rem;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    [dir="rtl"] .header-container {
+      direction: rtl;
+    }
+
+    /* Mobile Adaptations */
+    @media (max-width: 680px) {
+      .header-container {
+        padding: 0.5rem 0.75rem;
+      }
+      .brand h1 {
+        font-size: 1rem;
+      }
+      .zoom-controls {
+        display: none; /* Auto-fit on mobile screens */
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <div class="brand">
+        <h1 id="title-name">Pooria Askari Moqaddam</h1>
+        <span id="title-role">Senior Software Engineer</span>
+      </div>
+
+      <div class="controls">
+        <div class="lang-switcher" role="tablist">
+          <button id="btn-en" class="lang-btn active" onclick="switchLanguage('en')">English</button>
+          <button id="btn-fa" class="lang-btn" onclick="switchLanguage('fa')">فارسی</button>
+        </div>
+
+        <div class="zoom-controls">
+          <button class="zoom-btn" onclick="adjustZoom(-0.1)" title="Zoom Out" aria-label="Zoom Out">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          </button>
+          <span id="zoom-label" class="zoom-label" onclick="resetZoom()" title="Reset Zoom">Fit</span>
+          <button class="zoom-btn" onclick="adjustZoom(0.1)" title="Zoom In" aria-label="Zoom In">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          </button>
+        </div>
+
+        <a id="btn-download" class="download-btn" href="PooriaAskariMoqaddam.resume.pdf" download>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          <span id="download-text">Download PDF</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-container" id="resume-container">
+    <div class="loading-spinner" id="loading-indicator">
+      <div class="spinner"></div>
+      <p id="loading-text">Rendering pixel-perfect vector resume...</p>
+    </div>
+  </main>
+
+  <footer>
+    <a href="https://pccria.dev" target="_blank" rel="noopener">Website (pccria.dev)</a> &bull;
+    <a href="https://github.com/pccria" target="_blank" rel="noopener">GitHub</a> &bull;
+    <a href="https://linkedin.com/in/pooriaaskarim" target="_blank" rel="noopener">LinkedIn</a>
+  </footer>
+
+  <!-- PDF.js Engine -->
+  <script src="vendor/pdf.min.js"></script>
+  <script>
+    // Configure worker path
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'vendor/pdf.worker.min.js';
+
+    let currentLang = 'en';
+    let currentPdfDoc = null;
+    let manualZoomScale = null; // null means auto-fit
+    let isRendering = false;
+
+    const PDF_FILES = {
+      en: 'PooriaAskariMoqaddam.resume.pdf',
+      fa: 'PooriaAskariMoqaddam.resume.fa.pdf'
+    };
+
+    function updateUIStrings(lang) {
+      const isFa = (lang === 'fa');
+      document.documentElement.lang = isFa ? 'fa' : 'en';
+      document.documentElement.dir = isFa ? 'rtl' : 'ltr';
+
+      document.getElementById('btn-en').classList.toggle('active', !isFa);
+      document.getElementById('btn-fa').classList.toggle('active', isFa);
+
+      document.getElementById('title-name').textContent = isFa ? 'پوریا عسکری مقدم' : 'Pooria Askari Moqaddam';
+      document.getElementById('title-role').textContent = isFa ? 'مهندس ارشد نرم‌افزار' : 'Senior Software Engineer';
+
+      const downloadBtn = document.getElementById('btn-download');
+      downloadBtn.href = PDF_FILES[lang];
+      document.getElementById('download-text').textContent = isFa ? 'دانلود نسخه PDF' : 'Download PDF';
+
+      document.title = isFa ? 'پوریا عسکری مقدم — رزومه' : 'Pooria Askari Moqaddam — Resume';
+      document.getElementById('loading-text').textContent = isFa ? 'در حال رندر وکتور رزومه...' : 'Rendering pixel-perfect vector resume...';
+    }
+
+    async function renderDocument() {
+      if (isRendering) return;
+      isRendering = true;
+
+      const container = document.getElementById('resume-container');
+      container.innerHTML = `
+        <div class="loading-spinner" id="loading-indicator">
+          <div class="spinner"></div>
+          <p id="loading-text">${currentLang === 'fa' ? 'در حال رندر وکتور رزومه...' : 'Rendering pixel-perfect vector resume...'}</p>
+        </div>
+      `;
+
+      try {
+        const pdfUrl = PDF_FILES[currentLang];
+        currentPdfDoc = await pdfjsLib.getDocument(pdfUrl).promise;
+        container.innerHTML = '';
+
+        // Calculate available width for responsive auto-fit
+        const containerWidth = Math.min(container.clientWidth || 880, 880);
+
+        for (let pageNum = 1; pageNum <= currentPdfDoc.numPages; pageNum++) {
+          const page = await currentPdfDoc.getPage(pageNum);
+          const naturalViewport = page.getViewport({ scale: 1.0 });
+
+          // Determine scale
+          let effectiveScale;
+          if (manualZoomScale) {
+            effectiveScale = manualZoomScale;
+          } else {
+            // Auto fit container width
+            effectiveScale = (containerWidth - 32) / naturalViewport.width;
+          }
+
+          const viewport = page.getViewport({ scale: effectiveScale });
+          const pixelRatio = window.devicePixelRatio || 1.5;
+
+          // Page Card Container
+          const card = document.createElement('div');
+          card.className = 'page-card';
+          card.style.width = Math.floor(viewport.width) + 'px';
+          card.style.height = Math.floor(viewport.height) + 'px';
+
+          // Canvas Layer (Retina Vector Rendering)
+          const canvas = document.createElement('canvas');
+          canvas.width = Math.floor(viewport.width * pixelRatio);
+          canvas.height = Math.floor(viewport.height * pixelRatio);
+          canvas.style.width = Math.floor(viewport.width) + 'px';
+          canvas.style.height = Math.floor(viewport.height) + 'px';
+
+          const ctx = canvas.getContext('2d');
+          const transform = pixelRatio !== 1 ? [pixelRatio, 0, 0, pixelRatio, 0, 0] : null;
+
+          await page.render({
+            canvasContext: ctx,
+            transform: transform,
+            viewport: viewport
+          }).promise;
+          card.appendChild(canvas);
+
+          // Text Layer (Real DOM text for selection, search & copy)
+          const textLayerDiv = document.createElement('div');
+          textLayerDiv.className = 'textLayer';
+          textLayerDiv.style.width = Math.floor(viewport.width) + 'px';
+          textLayerDiv.style.height = Math.floor(viewport.height) + 'px';
+          textLayerDiv.style.setProperty('--scale-factor', viewport.scale);
+          card.appendChild(textLayerDiv);
+
+          const textContent = await page.getTextContent();
+          await pdfjsLib.renderTextLayer({
+            textContentSource: textContent,
+            container: textLayerDiv,
+            viewport: viewport
+          }).promise;
+
+          // Annotation Layer (Clickable Links)
+          const annotations = await page.getAnnotations();
+          for (const a of annotations) {
+            if (a.url) {
+              const rect = viewport.convertToViewportRectangle(a.rect);
+              const link = document.createElement('a');
+              link.href = a.url;
+              link.className = 'interactive-link';
+              link.title = a.url;
+
+              // If link is translation switch, intercept and switch language within page
+              if (a.url.includes('lang=fa') || a.url.includes('#fa')) {
+                link.onclick = (e) => { e.preventDefault(); switchLanguage('fa'); };
+              } else if (a.url.includes('pccria.github.io/resume') && !a.url.includes('lang=fa')) {
+                link.onclick = (e) => { e.preventDefault(); switchLanguage('en'); };
+              } else {
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
+              }
+
+              const left = Math.min(rect[0], rect[2]);
+              const top = Math.min(rect[1], rect[3]);
+              const width = Math.abs(rect[2] - rect[0]);
+              const height = Math.abs(rect[3] - rect[1]);
+
+              link.style.left = Math.floor(left) + 'px';
+              link.style.top = Math.floor(top) + 'px';
+              link.style.width = Math.floor(width) + 'px';
+              link.style.height = Math.floor(height) + 'px';
+
+              card.appendChild(link);
+            }
+          }
+
+          container.appendChild(card);
+        }
+
+        updateZoomLabel();
+      } catch (err) {
+        console.error('Failed to render PDF:', err);
+        container.innerHTML = `
+          <div class="loading-spinner">
+            <p style="color: #dc2626; font-weight: 600;">Unable to render vector resume preview.</p>
+            <p><a href="${PDF_FILES[currentLang]}" download class="download-btn">Direct PDF Download</a></p>
+          </div>
+        `;
+      } finally {
+        isRendering = false;
+      }
+    }
+
+    function switchLanguage(lang) {
+      if (currentLang === lang && currentPdfDoc) return;
+      currentLang = lang;
+      updateUIStrings(lang);
+      history.replaceState(null, '', currentLang === 'fa' ? '?lang=fa' : '?lang=en');
+      renderDocument();
+    }
+
+    function adjustZoom(delta) {
+      const current = manualZoomScale || (document.querySelector('.page-card canvas') ? (document.querySelector('.page-card').clientWidth / 595.28) : 1.3);
+      manualZoomScale = Math.max(0.6, Math.min(2.5, current + delta));
+      renderDocument();
+    }
+
+    function resetZoom() {
+      manualZoomScale = null;
+      renderDocument();
+    }
+
+    function updateZoomLabel() {
+      const label = document.getElementById('zoom-label');
+      if (!manualZoomScale) {
+        label.textContent = 'Fit';
+      } else {
+        label.textContent = Math.round((manualZoomScale / 1.3) * 100) + '%';
+      }
+    }
+
+    // Debounced Resize Observer
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        if (!manualZoomScale) {
+          renderDocument();
+        }
+      }, 200);
+    });
+
+    // Initialize from URL parameters
+    const params = new URLSearchParams(window.location.search);
+    const hash = window.location.hash.toLowerCase();
+    if (params.get('lang') === 'fa' || hash.includes('fa') || hash.includes('persian')) {
+      currentLang = 'fa';
+    } else {
+      currentLang = 'en';
+    }
+
+    updateUIStrings(currentLang);
+    renderDocument();
+  </script>
+</body>
+</html>

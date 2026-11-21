@@ -21,10 +21,12 @@
 %------------------------------------------------
 
 \name{Pooria Askari Moqaddam}
-\subtitle{Senior Cross-Platform \& Systems Engineer}
+\subtitle{Senior Software Engineer}
+\langlink{https://pccria.github.io/resume/?lang=fa}{Read in Persian}
 
 \email{\href{mailto:pooriaaskarim@gmail.com}{pooriaaskarim@gmail.com}}
 \phone{\href{tel:+989337330917}{+98 933 733 0917}}
+\website{\href{https://pccria.dev}{https://pccria.dev}}
 \address{Shiraz, Iran~\textperiodcentered~Open to Remote / Relocation}
 \linkedin{\href{https://www.linkedin.com/in/pooriaaskarim/}{linkedin.com/in/pooriaaskarim}}
 \github{\href{https://github.com/pccria}{github.com/pccria}}
@@ -41,7 +43,7 @@
 
 \begin{rSection}{Profile}
 \smallskip
-Senior cross-platform software engineer with 5+ years of commercial experience in real-time financial systems, enterprise platforms, and modular architectures, alongside an earlier background in Linux administration and board-level hardware diagnostics. Focused on background-isolate concurrency, custom layout engines, and open-source developer tooling across Dart, Flutter, Kotlin, and Rust. Committed to clean architecture, inspectable systems, and engineering cultures where honest communication enables teams to build sound software.
+Flutter and Dart engineer with 5+ years of commercial experience building client platforms, real-time financial systems, and modular application architectures. Focused on clean, testable software — with a track record across performance-critical rendering, event-driven state management, and open-source developer tooling (Logd, Flutter Notification Queue). Background in Linux systems administration, component-level electronics diagnostics, and hardware repair prior to entering software engineering.
 \end{rSection}
 
 %----------------------------------------------------------------------------------------
@@ -52,9 +54,9 @@ Senior cross-platform software engineer with 5+ years of commercial experience i
 \smallskip
 \renewcommand{\arraystretch}{1.25}%
 \begin{tabular*}{\linewidth}{@{} >{\bfseries}l @{\hspace{10pt}} >{\raggedright\arraybackslash}p{355pt} @{}}
-    Languages: & Dart, Kotlin, Python, Rust \textit{(FFI / DSP)}, TypeScript, Bash, SQL \\
-    Frameworks \& Core: & Flutter (Mobile, Desktop, Web), BLoC, Riverpod, Dart Isolates, \texttt{flutter\_rust\_bridge} \\
-    Architecture \& Systems: & Domain-Driven Design (DDD), Clean Architecture, Event-Driven Systems, State Machines (FSM), Melos \\
+    Languages: & Dart, Kotlin, Rust, Python, TypeScript, Bash, SQL \\
+    Frameworks \& State: & Flutter (Android, Desktop, Web), BLoC, Riverpod, Provider, GetX, Vue.js \\
+    Architecture \& Systems: & Clean Architecture, DDD, Event-Driven Systems, C FFI, Dart Isolates, Melos \\
     Storage \& Infrastructure: & SQLite (WAL), Redis, Hive, Docker, GitHub Actions CI/CD, Linux Administration, Nginx \\
 \end{tabular*}
 \end{rSection}
@@ -66,6 +68,7 @@ Senior cross-platform software engineer with 5+ years of commercial experience i
 \begin{rSection}{Open Source Projects}
 
     \begin{rSubsection}{Logd}{2025 -- Present}{Creator \& Maintainer}{BSD 3-Clause \hfill \footnotesize\textcolor{bluegray}{\faClean{\faGithubAlt}~\href{https://github.com/pccria/logd}{pccria/logd}~\textperiodcentered~\faClean{\faCube}~\href{https://pub.dev/packages/logd}{pub.dev/packages/logd}}}
+        \item[] {\small\textit{A structured logging engine for Dart and Flutter with isolate-offloaded I/O and zero-allocation filtering.}}
         \item Organized loggers in a dot-separated hierarchy with runtime policy reconfiguration, compiling effective states into 0.4\,ns bitmasks so disabled paths short-circuit with zero heap allocations.
         \item Propagated ambient diagnostic metadata across async boundaries via Dart Zones (\texttt{LogContext.run}) and offloaded formatting and I/O to background isolates via \texttt{SendPort} (\textasciitilde 15\,\textmu s handoff) so logging never competes with the host event loop.
         \item Architected as an 8-package Melos workspace (zero-dependency core) with opt-in satellites for SQLite WAL storage, Dio inspection, and LLM token-compressed telemetry (\texttt{logd\_toon}, 30--50\% reduction), validated by 2,500+ tests.
@@ -73,12 +76,14 @@ Senior cross-platform software engineer with 5+ years of commercial experience i
     \end{rSubsection}
 
     \begin{rSubsection}{SarvMD}{2026 -- Present}{Creator \& Maintainer}{BUSL-1.1 \hfill \footnotesize\textcolor{bluegray}{\faClean{\faGithubAlt}~\href{https://github.com/pccria/sarvmd}{pccria/sarvmd}~\textperiodcentered~\faClean{\faDesktop}~\href{https://pccria.github.io/sarvmd}{Live Studio Demo}}}
+        \item[] {\small\textit{A blank-canvas sheet music designer and typography engine for Flutter with sub-millimeter print fidelity.}}
         \item Built a blank-canvas sheet music designer and CLI on a zero-dependency Dart engraving engine with hierarchical \textbf{SystemLayout} trees, physical page coordinates, and orchestral engraving rules (MOLA).
         \item Implemented native in-memory compilers emitting 1:1 print-accurate \textbf{Vector PDF}, \textbf{SVG}, and \textbf{LaTeX (\texttt{\textbackslash pdfliteral})}, backed by a sub-millimeter physical page calibration system.
         \\ \chip{Dart} \chip{Flutter} \chip{Cubit} \chip{Vector Graphics} \chip{PDF / SVG} \chip{LaTeX} \chip{Algorithms}
     \end{rSubsection}
 
     \begin{rSubsection}{Flutter Notification Queue}{2025 -- Present}{Creator \& Maintainer}{BSD 3-Clause \hfill \footnotesize\textcolor{bluegray}{\faClean{\faGithubAlt}~\href{https://github.com/pccria/flutter_notification_queue}{pccria/flutter\_notification\_queue}~\textperiodcentered~\faClean{\faCube}~\href{https://pub.dev/packages/flutter_notification_queue}{pub.dev}~\textperiodcentered~\faClean{\faDesktop}~\href{https://pccria.github.io/flutter_notification_queue/}{Live Demo}}}
+        \item[] {\small\textit{An overlay notification system for Flutter featuring multi-slot priority queues and gesture interactions.}}
         \item Implemented independent overlay queues across 8 screen positions simultaneously, with priority scheduling, stack bundling, and configurable overflow handling.
         \item Decoupled user interactions (drag-to-dismiss, drag-to-relocate, stack reorder) into self-contained declarative gesture plugins for independent configuration and testability.
         \item Exposed the complete notification lifecycle (enqueued, dismissed, relocated, overflowed) as a typed reactive event stream for host application observability.
@@ -98,7 +103,7 @@ Senior cross-platform software engineer with 5+ years of commercial experience i
     \begin{rSubsection}{Rahandaaz}{2024 -- 2025}{Lead / Senior Software Engineer}{Shiraz, Iran}
         \item Led client engineering within a 6-person cross-functional team (frontend, backend, design, and product) to deliver a project management and business consultation platform.
         \item Unblocked a stalled, unstructured codebase by introducing a planned domain model (\textbf{DDD} and \textbf{Clean Architecture}) and reworking the interface into a dedicated domain-aligned UX.
-        \\ \chip{Flutter} \chip{Dart} \chip{Kotlin} \chip{Domain-Driven Design} \chip{Clean Architecture} \chip{Hive} \chip{Firebase}
+        \\ \chip{Flutter} \chip{Dart} \chip{Domain-Driven Design} \chip{Clean Architecture} \chip{Hive} \chip{Firebase}
     \end{rSubsection}
 
     \begin{rSubsection}{Didehban Tejarat}{2023 -- 2024}{Lead Front-End Developer}{Shiraz, Iran}

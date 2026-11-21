@@ -1,0 +1,143 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Medium Length Professional CV - Persian Edition
+% LaTeX Template
+% author: Pooria Askari Moqaddam
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[
+	a4paper,
+	11pt,
+]{resume_fa}
+
+\title{PooriaAskariMoqaddam.Resume.Fa}
+
+%------------------------------------------------
+% Identity & Letterhead
+%------------------------------------------------
+
+\name{پوریا عسکری مقدم}
+\subtitle{مهندس ارشد نرم‌افزار}
+\langlink{https://pccria.github.io/resume/}{به انگلیسی بخوانید}
+
+\email{\href{mailto:pooriaaskarim@gmail.com}{pooriaaskarim@gmail.com}}
+\phone{\href{tel:+989337330917}{+98 933 733 0917}}
+\website{\href{https://pccria.dev}{https://pccria.dev}}
+\address{شیراز، ایران~\textperiodcentered~امکان همکاری ریموت / جابجایی}
+\linkedin{\href{https://www.linkedin.com/in/pooriaaskarim/}{linkedin.com/in/pooriaaskarim}}
+\github{\href{https://github.com/pccria}{github.com/pccria}}
+
+%----------------------------------------------------------------------------------------
+\color{darkgray}
+\begin{document}
+\makeheader
+
+%----------------------------------------------------------------------------------------
+%	PROFILE / EXECUTIVE SUMMARY
+%----------------------------------------------------------------------------------------
+
+\begin{rSection}{پروفایل}
+\smallskip
+مهندس نرم‌افزار با بیش از ۵ سال سابقه در اکوسیستم \lr{Flutter} و \lr{Dart}، با تمرکز بر توسعه سامانه‌های مالی \lr{Real-time} و طراحی معماری‌های ماژولار. پایبند به اصول \lr{Clean Architecture} و توسعه کدهای تست‌پذیر؛ با سابقه توسعه و نگهداری ابزارهای \lr{Open Source} نظیر \lr{Logd} و \lr{Flutter Notification Queue}. دارای پیشینه فنی در مدیریت سرورهای لینوکسی، عیب‌یابی تخصصی بردهای الکترونیکی و تعمیرات سخت‌افزار پیش از ورود به مهندسی نرم‌افزار.
+\end{rSection}
+
+%----------------------------------------------------------------------------------------
+%	TECHNICAL SKILLS
+%----------------------------------------------------------------------------------------
+
+\begin{rSection}{مهارت‌های تخصصی}
+\smallskip
+\renewcommand{\arraystretch}{1.3}%
+\begin{tabular*}{\linewidth}{@{} >{\bfseries}r @{\hspace{10pt}} >{\raggedleft\arraybackslash}p{345pt} @{}}
+    زبان‌ها: & \lr{Dart, Kotlin, Rust, Python, TypeScript, Bash, SQL} \\
+    فریم‌ورک‌ها و ابزارها: & \lr{Flutter (Android, Desktop, Web), BLoC, Riverpod, Provider, GetX, Vue.js} \\
+    معماری و سیستم‌ها: & \lr{Clean Architecture, DDD, Event-Driven Systems, C FFI, Dart Isolates, Melos} \\
+    زیرساخت و پایگاه‌داده: & \lr{SQLite (WAL), Redis, Hive, Docker, GitHub Actions CI/CD, Linux Administration, Nginx} \\
+\end{tabular*}
+\end{rSection}
+
+%----------------------------------------------------------------------------------------
+%	OPEN SOURCE PROJECTS (PAGE 1)
+%----------------------------------------------------------------------------------------
+
+\begin{rSection}{پروژه‌های \lr{Open Source}}
+
+    \begin{rSubsection}{Logd}{2025 -- اکنون}{\lr{Creator \& Maintainer}}{\lr{BSD 3-Clause} \hfill \footnotesize\textcolor{bluegray}{\faClean{\faGithubAlt}~\lr{\href{https://github.com/pccria/logd}{pccria/logd}}~\textperiodcentered~\faClean{\faCube}~\lr{\href{https://pub.dev/packages/logd}{pub.dev/packages/logd}}}}
+        \item[] {\small\textsl{موتور لاگینگ ساختاریافته برای \lr{Dart} و \lr{Flutter} با انتقال پردازش \lr{I/O} به \lr{Isolate} و فیلترینگ سریع.}}
+        \item سازمان‌دهی سلسله‌مراتبی لاگرها با شناسه نقطه‌ای و بازپیکربندی زمان اجرا؛ کامپایل وضعیت‌ها به ماسک بیتی (\lr{0.4\,ns}) جهت عبور آنی از مسیرهای غیرفعال بدون \lr{Heap Allocation}.
+        \item انتشار خودکار متادیتای لاگ در فرایندهای ناهمگام (\lr{Async}) با استفاده از \lr{Dart Zones} و انتقال فرمت‌بندی و پردازش \lr{I/O} به \lr{Isolate}های پس‌زمینه از طریق \lr{\texttt{SendPort}} (\lr{\textasciitilde 15\,\textmu s}) جهت جلوگیری از درگیر شدن \lr{Event Loop} اصلی اپلیکیشن.
+        \item معماری ماژولار در قالب یک مونو‌ریپوی ۸ بسته‌ای با \lr{Melos} (هسته مستقل و بدون وابستگی)؛ شامل اکستنشن‌های اختیاری برای ذخیره‌سازی در \lr{SQLite (WAL)}، ثبت درخواست‌های \lr{Dio} و فشرده‌سازی تله‌متری برای مدل‌های زبانی (\lr{\texttt{logd\_toon}} با ۳۰ تا ۵۰ درصد کاهش مصرف توکن)، همراه با بیش از ۲,۵۰۰ تست خودکار.
+        \\ \chip{Dart} \chip{Flutter} \chip{Dart Isolates} \chip{Dart Zones} \chip{SQLite} \chip{Melos} \chip{Concurrency}
+    \end{rSubsection}
+
+    \begin{rSubsection}{SarvMD}{2026 -- اکنون}{\lr{Creator \& Maintainer}}{\lr{BUSL-1.1} \hfill \footnotesize\textcolor{bluegray}{\faClean{\faGithubAlt}~\lr{\href{https://github.com/pccria/sarvmd}{pccria/sarvmd}}~\textperiodcentered~\faClean{\faDesktop}~\lr{\href{https://pccria.github.io/sarvmd}{Live Studio Demo}}}}
+        \item[] {\small\textsl{موتور نگارش و طراحی نت موسیقی در \lr{Flutter} با خروجی برداری و انطباق کامل با استاندارد چاپ.}}
+        \item طراحی و توسعه نرم‌افزار نت‌نویسی موسیقی و ابزار خط فرمان (\lr{CLI}) بر پایه موتور اختصاصی نگارش نت در \lr{Dart} (بدون وابستگی خارجی)؛ مبتنی بر ساختار درختی \lr{\textbf{SystemLayout}}، مختصات فیزیکی صفحه و قوانین استاندارد نت‌نویسی ارکسترال (\lr{MOLA}).
+        \item پیاده‌سازی کامپایلر درون‌حافظه‌ای با خروجی دقیق ۱:۱ در قالب فرمت‌های برداری \lr{\textbf{PDF}}، \lr{\textbf{SVG}} و \lr{\textbf{LaTeX}}، همراه با سیستم کالیبراسیون ساب‌میلی‌متری ابعاد صفحه.
+        \\ \chip{Dart} \chip{Flutter} \chip{Cubit} \chip{Vector Graphics} \chip{PDF / SVG} \chip{LaTeX} \chip{Algorithms}
+    \end{rSubsection}
+
+    \begin{rSubsection}{\lr{Flutter Notification Queue}}{2025 -- اکنون}{\lr{Creator \& Maintainer}}{\lr{BSD 3-Clause} \hfill \footnotesize\textcolor{bluegray}{\faClean{\faGithubAlt}~\lr{\href{https://github.com/pccria/flutter_notification_queue}{flutter\_notification\_queue}}~\textperiodcentered~\faClean{\faCube}~\lr{\href{https://pub.dev/packages/flutter_notification_queue}{pub.dev}}~\textperiodcentered~\faClean{\faDesktop}~\lr{\href{https://pccria.github.io/flutter_notification_queue/}{Live Demo}}}}
+        \item[] {\small\textsl{سامانه مدیریت نوتیفیکیشن‌های \lr{Overlay} در \lr{Flutter} با صف‌های چندگانه، اولویت‌بندی و تعاملات لمسی.}}
+        \item پیاده‌سازی صف‌های مستقل برای نمایش نوتیفیکیشن در ۸ موقعیت صفحه؛ همراه با اولویت‌بندی، دسته‌بندی نوتیفیکیشن‌ها (\lr{Stack Bundling}) و مدیریت سرریز ظرفیت (\lr{Overflow}).
+        \item تفکیک تعاملات لمسی (مانند کشیدن برای بستن، جابجایی یا بازآرایی) در قالب پلاگین‌های ماژولار \lr{Gesture} جهت شخصی‌سازی آسان و تست‌پذیری مستقل.
+        \item ارائه کامل چرخه حیات نوتیفیکیشن‌ها در قالب یک جریان رویداد تایپ‌شده (\lr{Typed Reactive Event Stream}) جهت مانیتورینگ و رهگیری دقیق در اپلیکیشن میزبان.
+        \\ \chip{Flutter} \chip{Dart} \chip{State Management} \chip{Event-Driven} \chip{FSM} \chip{UI Architecture}
+    \end{rSubsection}
+
+\end{rSection}
+
+\newpage
+
+%----------------------------------------------------------------------------------------
+%	PROFESSIONAL EXPERIENCE (PAGE 2)
+%----------------------------------------------------------------------------------------
+
+\begin{rSection}{سوابق شغلی}
+
+    \begin{rSubsection}{راه‌انداز (\lr{Rahandaaz})}{2024 -- 2025}{\lr{Lead / Senior Software Engineer}}{شیراز، ایران}
+        \item هدایت بخش توسعه فرانت‌اند در یک ساختار چندتخصصی ۶ نفره (فرانت‌اند، بک‌اند، طراحی محصول) برای پیاده‌سازی پلتفرم مدیریت پروژه و مشاوره کسب‌وکار.
+        \item سامان‌دهی و رفع انسداد یک پایگاه‌کد متوقف‌شده با پیاده‌سازی مدل دامنه مبتنی بر اصول \lr{\textbf{DDD}} و \lr{\textbf{Clean Architecture}} و بازطراحی رابط کاربری متناسب با نیازهای محصول.
+        \\ \chip{Flutter} \chip{Dart} \chip{Domain-Driven Design} \chip{Clean Architecture} \chip{Hive} \chip{Firebase}
+    \end{rSubsection}
+
+    \begin{rSubsection}{دیده‌بان تجارت (\lr{Didehban Tejarat})}{2023 -- 2024}{\lr{Lead Front-End Developer}}{شیراز، ایران}
+        \item هدایت تیم فرانت‌اند برای نرم‌افزار سازمانی \lr{\textbf{CRM}}، طراحی رابط‌های کاربری واکنش‌گرا، کامپوننت‌های بومی‌سازی‌شده و نقشه‌های تعاملی.
+        \item تدوین استانداردهای کیفیت کد و بازبینی معماری جهت یکپارچه‌سازی خروجی تیم و تسهیل ورود نیروهای جدید (\lr{Onboarding}).
+        \item خودکارسازی پایپ‌لاین‌های \lr{\textbf{CI/CD}} با \lr{\textbf{Docker}} و \lr{\textbf{GitHub Actions}} برای بیلد و تست اپلیکیشن و حذف کامل فرآیندهای دستی.
+        \\ \chip{Flutter} \chip{Dart} \chip{Docker} \chip{CI/CD} \chip{GitHub Actions} \chip{REST APIs} \chip{Hive}
+    \end{rSubsection}
+
+    \begin{rSubsection}{چارتیکس (\lr{Chartix})}{2022 -- 2023}{\lr{Software Developer}}{شیراز، ایران}
+        \item توسعه نرم‌افزارهای کلاینت شامل نسخه نیتیو \lr{\textbf{Android}}، وب‌اپلیکیشن \lr{\textbf{PWA}} و بات اتوماسیون مالی جهت یکپارچه‌سازی دسترسی به خدمات بازار.
+        \item بهینه‌سازی جریان داده و رندرینگ \lr{Canvas} در \lr{Flutter} جهت حفظ نرخ فریم روان (\lr{\textbf{+60 FPS}}) در چارت‌ها و جلوگیری از مسدود شدن \lr{UI Thread} زیر بار داده‌های \lr{WebSocket}.
+        \item پیاده‌سازی لایه پایدار کش و مدیریت داده‌ها با \lr{\textbf{Redis}} و \lr{\textbf{SQLite}} همراه با پایش سلامت اتصال جهت تضمین پایداری در ساعات اوج بار ترافیکی بازار.
+        \\ \chip{Flutter} \chip{Python} \chip{BLoC} \chip{Redis} \chip{WebSockets} \chip{SQLite} \chip{Android} \chip{PWA}
+    \end{rSubsection}
+
+    \begin{rSubsection}{فپکو (\lr{FepCo})}{2021 -- 2022}{\lr{Software Developer}}{شیراز، ایران}
+        \item توسعه ماژول‌های کلاینت برای سامانه سازمانی \lr{\textbf{ERP}} با \lr{\textbf{Flutter}} و \lr{\textbf{Dart}} بر پایه مرزبندی‌های \lr{\textbf{Clean Architecture}} و \lr{\textbf{DDD}}.
+        \item پیاده‌سازی مدیریت متمرکز وضعیت (\lr{State Management}) و مسیریابی، فرم‌های چندمرحله‌ای پویا و کامپوننت‌های با قابلیت استفاده مجدد در ماژول‌های مختلف سیستم.
+        \\ \chip{Flutter} \chip{Dart} \chip{Clean Architecture} \chip{DDD} \chip{Scrum} \chip{State Management}
+    \end{rSubsection}
+
+    \begin{rSubsection}{زیرساخت سیستم‌ها و پشتیبانی فنی}{2014 -- 2020}{\lr{Systems Administrator \& Hardware Diagnostics Technician}}{شیراز، ایران}
+        \item پیکربندی سرورهای \lr{\textbf{Linux/Windows}} برای میزبانی نرم‌افزارهای سازمانی، سرویس‌های دایرکتوری و مخابرات \lr{\textbf{VoIP}}.
+        \item همکاری با تیم توسعه در راه‌اندازی سرویس پخش ویدیوی امن (\lr{\textbf{Video Streaming}}) با احراز هویت توکن‌محور و کنترل دسترسی.
+        \item عیب‌یابی تخصصی سخت‌افزار در سطح قطعه، تعمیرات بردهای الکترونیکی و مادربورد، و راه‌اندازی زیرساخت شبکه و سیستم‌های برق اضطراری (\lr{UPS}).
+        \\ \chip{Linux} \chip{Bash} \chip{Networking} \chip{VoIP} \chip{Hardware Diagnostics} \chip{Server Administration}
+    \end{rSubsection}
+
+\end{rSection}
+
+%----------------------------------------------------------------------------------------
+%	EDUCATION
+%----------------------------------------------------------------------------------------
+
+\begin{rSection}{تحصیلات}
+    \textbf{دانشگاه آزاد اسلامی} \hfill \textit{\beginL 1397 (2018) \endL} \\
+    کارشناسی مهندسی تکنولوژی نرم‌افزار کامپیوتر \\[2pt]
+    \textbf{دانشگاه صنعتی اراک} \hfill \textit{\beginL 1394 (2015) \endL} \\
+    کاردانی فنی برق قدرت
+\end{rSection}
+
+\end{document}

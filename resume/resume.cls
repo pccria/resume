@@ -63,37 +63,10 @@
 
 
 %----------------------------------------------------------------------------------------
-%	MARGINS
+%	SHARED DESIGN TOKENS (Margins, Palette, TikZ)
 %----------------------------------------------------------------------------------------
 
-\usepackage{geometry} % Required for adjusting page dimensions and margins
-\geometry{
-	top=24pt,    % Symmetric top margin (header is body content, not fancyhdr)
-	bottom=24pt,
-	left=48pt,
-	right=48pt,
-	nohead,      % No space reserved for header on any page
-	nofoot,      % No space reserved for footer on any page
-	%showframe,  % Uncomment to show how the type block is set on the page
-}
-
-%----------------------------------------------------------------------------------------
-%	PAGESTYLE
-%----------------------------------------------------------------------------------------
-
-% No headers or footers on any page — header is rendered as body content via \makeheader
-\pagestyle{empty}
-
-
-%----------------------------------------------------------------------------------------
-%	Colors
-%----------------------------------------------------------------------------------------
-
-\usepackage[dvipsnames]{xcolor}
-\definecolor{pantonegray}{RGB}{66, 67, 72}
-\definecolor{darkgray}{RGB}{52 ,52, 52}
-\definecolor{bluegray}{RGB}{74, 97, 113}
-\definecolor{background}{RGB}{236, 233, 225}
+\input{resume-tokens.def}
 
 %----------------------------------------------------------------------------------------
 %	HYPERLINKS
@@ -115,10 +88,6 @@
 %	SHAPES
 %----------------------------------------------------------------------------------------
 
-% Use the TikZ package
-\usepackage{tikz}
-\usetikzlibrary{shapes, positioning}
-
 % Define a new command to create a chip-like shape with text inside a colored box
 \newcommand{\chip}[2][bluegray]{%
     \tikz[baseline]{%
@@ -133,11 +102,6 @@
 }
 
 
-\newcommand{\pdot}[1][1pt]{
-    \tikz\draw[fill=pantonegray,draw=pantonegray] (0,0) circle (#1);
-}
-
-
 %----------------------------------------------------------------------------------------
 %	NAME AND INFO COMMANDS
 %----------------------------------------------------------------------------------------
@@ -147,33 +111,43 @@
 \newcommand{\subtitle}[1]   {\def \@subtitle{#1}}
 \newcommand{\email}[1]      {\def \@email{#1}}
 \newcommand{\phone}[1]      {\def \@phone{#1}}
+\newcommand{\website}[1]    {\def \@website{#1}}
 \newcommand{\address}[1]    {\def \@address{#1}}
 \newcommand{\linkedin}[1]   {\def \@linkedin{#1}}
 \newcommand{\github}[1]     {\def \@github{#1}}
+\newcommand{\langlink}[2]   {\def \@langlinkurl{#1}\def \@langlinktext{#2}}
 
 % \makeheader renders the unified letterhead block as body content on page 1.
 % Layout:
-%   Row 1 (identity) : name (Large) left  ·  subtitle right
-%   Row 2 (contact)  : phone left  ·  email right
+%   Row 1 (identity) : name (Large) left  ·  subtitle + langlink right
+%   Row 2 (contact)  : phone left  ·  website center  ·  email right
 %   Row 3 (profiles) : linkedin left  ·  address center  ·  github right
 % Followed by a pantonegray separator rule.
 \newcommand{\makeheader}{%
   \begingroup
   \leftskip=0pt\rightskip=0pt\parindent=0pt\parfillskip=0pt
-  % Identity row
+  % Identity row: Name — Subtitle at start, translation link at end
   \begin{tabular*}{\textwidth}{@{} l @{\extracolsep{\fill}} r @{}}
-    \textcolor{pantonegray}{\MakeUppercase{\Large\bfseries\name}} &
-    \textcolor{pantonegray}{\MakeUppercase{\small\bfseries\@subtitle}} \\
+    \textcolor{pantonegray}{%
+      {\MakeUppercase{\Large\bfseries\name}}%
+      \hspace{8pt}\textbf{\textemdash}\hspace{8pt}%
+      {\MakeUppercase{\small\bfseries\@subtitle}}%
+    } &
+    \ifthenelse{\isundefined{\@langlinkurl}}{}{%
+      \textcolor{bluegray}{\footnotesize\href{\@langlinkurl}{\faClean{\faLanguage}\hspace{3pt}\@langlinktext}}%
+    } \\
   \end{tabular*}\par\vspace{2pt}%
-  % Contact rows
+  % Contact rows (3 balanced columns: left, true center, right)
   {\color{bluegray}\footnotesize%
-  \renewcommand{\arraystretch}{1.2}%
-  \begin{tabular*}{\textwidth}{@{} l @{\extracolsep{\fill}} r @{}}
-    \faClean{\faPhone}\hspace{3pt}\@phone & \@email\hspace{3pt}\faClean{\faEnvelope} \\
-  \end{tabular*}\par\vspace{-2pt}%
-  \begin{tabular*}{\textwidth}{@{} l @{\extracolsep{\fill}} c @{\extracolsep{\fill}} r @{}}
-    \faClean{\faLinkedin}\hspace{3pt}\@linkedin & \@address & \@github\hspace{3pt}\faClean{\faGithubAlt} \\
-  \end{tabular*}\par
+  \par\vspace{2pt}\noindent
+  \makebox[150pt][l]{\faClean{\faPhone}\hspace{3pt}\@phone}%
+  \makebox[\dimexpr\textwidth-300pt\relax][c]{\ifthenelse{\isundefined{\@website}}{}{\faClean{\faGlobe}\hspace{3pt}\@website}}%
+  \makebox[150pt][r]{\@email\hspace{3pt}\faClean{\faEnvelope}}%
+  \par\vspace{2pt}\noindent
+  \makebox[150pt][l]{\faClean{\faLinkedin}\hspace{3pt}\@linkedin}%
+  \makebox[\dimexpr\textwidth-300pt\relax][c]{\@address}%
+  \makebox[150pt][r]{\@github\hspace{3pt}\faClean{\faGithubAlt}}%
+  \par
   }%
   \vspace{5pt}%
   {\color{pantonegray}\hrule height 0.4pt}%

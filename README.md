@@ -19,10 +19,11 @@
 ## Resume
 
 [![Render LaTeX Resume](https://github.com/pccria/resume/actions/workflows/render.yml/badge.svg)](https://github.com/pccria/resume/actions/workflows/render.yml)
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live%20Preview-2496ED?style=flat-square&logo=github)](https://pccria.github.io/resume/)
 [![Latest Release](https://img.shields.io/github/v/release/pccria/resume?label=latest&style=flat-square)](https://github.com/pccria/resume/releases/latest)
 [![License: MIT + CC BY-NC-ND](https://img.shields.io/badge/License-MIT%20%2B%20CC%20BY--NC--ND-blue?style=flat-square)](LICENSE)
 
-**[→ Download PDF](https://github.com/pccria/resume/releases/latest/download/PooriaAskariMoqaddam.resume.pdf)**
+**[🌐 Live Web Preview (English & فارسی)](https://pccria.github.io/resume/)** · **[📥 Download English PDF](https://github.com/pccria/resume/releases/latest/download/PooriaAskariMoqaddam.resume.pdf)** · **[📥 دانلود نسخه فارسی (PDF)](https://github.com/pccria/resume/releases/latest/download/PooriaAskariMoqaddam.resume.fa.pdf)**
 
 ---
 

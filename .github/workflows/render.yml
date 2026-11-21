@@ -11,6 +11,12 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: 'pages'
+  cancel-in-progress: false
 
 jobs:
   build-and-release:
@@ -21,22 +27,66 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Compile LaTeX Resume
+      - name: Compile English Resume
         uses: xu-cheng/latex-action@v3
         with:
           root_file: resume.tex
           working_directory: resume
           compiler: pdflatex
 
-      - name: Rename PDF
+      - name: Rename English PDF
         run: mv resume/resume.pdf resume/PooriaAskariMoqaddam.resume.pdf
 
-      - name: Upload PDF Artifact
+      - name: Compile Persian Resume
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: resume_fa.tex
+          working_directory: resume
+          compiler: xelatex
+
+      - name: Rename Persian PDF
+        run: mv resume/resume_fa.pdf resume/PooriaAskariMoqaddam.resume.fa.pdf
+
+      - name: Generate High-Res Previews
+        run: |
+          sudo apt-get update && sudo apt-get install -y poppler-utils
+          mkdir -p preview
+          pdftoppm -png -r 200 resume/PooriaAskariMoqaddam.resume.pdf preview/resume_en
+          pdftoppm -png -r 200 resume/PooriaAskariMoqaddam.resume.fa.pdf preview/resume_fa
+          mv -f preview/resume_en-1.png preview/resume_en_page1.png
+          mv -f preview/resume_en-2.png preview/resume_en_page2.png
+          mv -f preview/resume_fa-1.png preview/resume_fa_page1.png
+          mv -f preview/resume_fa-2.png preview/resume_fa_page2.png
+
+      - name: Prepare GitHub Pages Site
+        run: |
+          mkdir -p _site/preview
+          cp web/index.html _site/
+          cp -r web/vendor _site/
+          cp resume/PooriaAskariMoqaddam.resume.pdf _site/
+          cp resume/PooriaAskariMoqaddam.resume.fa.pdf _site/
+          cp preview/*.png _site/preview/
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '_site'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Upload PDF Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: resume-pdf
+          name: resume-pdfs
           retention-days: 7
-          path: resume/PooriaAskariMoqaddam.resume.pdf
+          path: |
+            resume/PooriaAskariMoqaddam.resume.pdf
+            resume/PooriaAskariMoqaddam.resume.fa.pdf
 
       - name: Determine Version Tag
         id: version
@@ -58,6 +108,8 @@ jobs:
         run: |
           git tag "${{ env.NEW_TAG }}"
           git push origin "${{ env.NEW_TAG }}"
-          gh release create "${{ env.NEW_TAG }}" resume/PooriaAskariMoqaddam.resume.pdf \
+          gh release create "${{ env.NEW_TAG }}" \
+            resume/PooriaAskariMoqaddam.resume.pdf \
+            resume/PooriaAskariMoqaddam.resume.fa.pdf \
             -t "${{ env.NEW_TAG }}" \
             -n "Automated release for ${{ env.NEW_TAG }}"
